@@ -1,7 +1,7 @@
 
 
 # tjbot-ibm-mexico
-creado para el taller
+Codigo basado en el original de IBM pero modificado para soportar español
 
 
 ## Usage
