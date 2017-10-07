@@ -115,11 +115,36 @@ function wrapUp(error, data) {
 }
 
 function doSee(){
+	var objeto=null;
+	var otro =null;
 	tj.see().then(function(objects){
 		for(i=0;i< objects.length;i++){
 			console.log(objects[i]);
+			if(objects[i].type_hierarchy != null){
+				if(objeto==null){
+					objeto=objects[i];
+				}else{
+					if(objects[i].score > objeto.score){
+						objeto=objects[i];
+					}
+				}
+			}
+			if(otro!=null){
+				if(objects[i].score > otro.score){
+					otro=objects[i];
+				}
+			}else{
+				otro=objects[i];
+			}
 		}
-	}).then(tj.speak("listos"));
+		if(objeto != null){
+			tj.speak(objeto.class);
+		} else if (otro != null){
+			tj.speak(otro.class);
+		} else {
+			tj.speak("No reconozco nada!");
+		}
+	});
 }
 
 function discoParty() {
