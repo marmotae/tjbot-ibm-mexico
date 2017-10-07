@@ -19,6 +19,7 @@ var TJBot = require('./lib/tjbot');
 // Cargamos la configuracion de credenciales
 var config = require('./config');
 
+
 // obtain our credentials from config.js
 var credentials = config.credentials;
 
@@ -61,6 +62,7 @@ var tjConfig = {
 
 // Instanciamos al TJBot!
 var tj = new TJBot(hardware, tjConfig, credentials);
+
 
 // Nos presentamos en la consola
 console.log("Me puedes pedir que me presente o que te diga un chiste");
@@ -113,15 +115,16 @@ function wrapUp(error, data) {
 }
 
 function discoParty() {
-  tj.play('./resources/club.wav');
-  for (i = 0; i < 10; i++) {
-    tj.wave();
-    setTimeout(function() {
-      var randIdx = Math.floor(Math.random() * tjColors.length);
-      var randColor = tjColors[randIdx];
-      tj.shine(randColor);
-    }, i * 250);
-  }
+	var tjColors = tj.shineColors();
+	tj.play('./resources/club.wav');
+	for (i = 0; i < 10; i++) {
+		tj.wave();
+		setTimeout(function() {
+			var randIdx = Math.floor(Math.random() * tjColors.length);
+			var randColor = tjColors[randIdx];
+			tj.shine(randColor);
+		}, i * 250);
+	}
 }
 
 /*
