@@ -118,12 +118,12 @@ function discoParty() {
 	var tjColors = tj.shineColors();
 	tj.play('./resources/club.wav');
 	for (i = 0; i < 10; i++) {
-		tj.wave();
 		setTimeout(function() {
 			var randIdx = Math.floor(Math.random() * tjColors.length);
 			var randColor = tjColors[randIdx];
 			tj.shine(randColor);
 		}, i * 250);
+		tj.wave();
 	}
 }
 
@@ -150,11 +150,8 @@ function doListen(){
 						}else if(response.description.startsWith('<tweetView/>')){
 							doSee();
 						} else {
-							if(response.description.startsWith('<wave')){tj.wave();}
-							if(response.description.startsWith('<baila')){discoParty();}
-							if(response.description.startsWith('<armUp/>')){tj.raiseArm()};
-							if(response.description.startsWith('<armDown/>')){tj.lowerArm()};
-							tj.speak(response.description).then(function(){tj.shine('green');});
+							if(response.description.startsWith('<baila/>')){discoParty();}
+							if(response.description.startsWith('<comparte/>')){doTwitImage()};
 						}
 					}
 				});
