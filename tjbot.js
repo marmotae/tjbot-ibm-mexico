@@ -145,13 +145,11 @@ function doListen(){
 					
 					// Manejamos la respuesta
 					if(response != null && response.description != null && response.description != ''){
-						if(response.description.startsWith('<read/>')){
-							doRead();
-						}else if(response.description.startsWith('<tweetView/>')){
-							doSee();
-						} else {
+						if(response.description.startsWith('<')){
 							if(response.description.startsWith('<baila/>')){discoParty();}
 							if(response.description.startsWith('<comparte/>')){doTwitImage()};
+						} else {
+							tj.speak(response.description);
 						}
 					}
 				});
