@@ -119,7 +119,7 @@ function doSee(){
 		for(i=0;i< objects.length;i++){
 			console.log(objects[i]);
 		}
-	}).then(tj.speak("listo"));
+	}).then(tj.speak("correcto"));
 }
 
 function discoParty() {
