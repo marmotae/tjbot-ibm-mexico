@@ -114,6 +114,14 @@ function wrapUp(error, data) {
   }
 }
 
+function doSee(){
+	tj.see().then(function(objects){
+		for(i=0;i< objects.length;i++){
+			console.log(objects[i]);
+		}
+	}).then(tj.speak("listo"));
+}
+
 function discoParty() {
 	var tjColors = tj.shineColors();
 	tj.play('./resources/club.wav');
@@ -148,6 +156,7 @@ function doListen(){
 						if(response.description.startsWith('<')){
 							if(response.description.startsWith('<baila/>')){discoParty();}
 							if(response.description.startsWith('<comparte/>')){doTwitImage()};
+							if(response.description.startsWith('<ve/>')){doSee()};
 						} else {
 							tj.speak(response.description);
 						}
