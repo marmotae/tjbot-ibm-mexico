@@ -14,21 +14,40 @@
  * limitations under the License.
  */
 
-const TJBot = require('./lib/tjbot');
-const config = require('./config');
+// Cargamos la biblioteca de tjbot
+var TJBot = require('./lib/tjbot');
+// Cargamos la configuracion de credenciales
+var config = require('./config');
 
+// obtain our credentials from config.js
 var credentials = config.credentials;
-var hardware = ['camera','speaker'];
 
-// turn on debug logging to the console
+// obtain user-specific config
+var WORKSPACEID = config.conversationWorkspaceId;
+
+// these are the hardware capabilities that TJ needs for this recipe
+var hardware = ['led','servo','microphone', 'speaker','camera'];
+
+// set up TJBot's configuration
 var tjConfig = {
+    robot: {
+    		name: 'mago',
+    		gender: 'male',
+    },
+    listen: {
+        language: 'es-ES',
+        inactivity_timeout: -1
+    },
+    speak: {
+        language: 'es-ES'
+    },
     log: {
-        level: 'silly'
+        level: 'info',
     },
     see: {
-    	confidenceThreshold: {
-            object: 0.2,   // only list image tags with confidence > 0.5
-            text: 0.1     // only list text tags with confidence > 0.5
+        confidenceThreshold: {
+            object: 0.5,   // Lista objetos donde la certeza es > 0.5
+            text: 0.5     // Lee textos donde la certeza es > 0.5
         },
         camera: {
             height: 720,
@@ -36,14 +55,111 @@ var tjConfig = {
             verticalFlip: false, // flips the image vertically, may need to set to 'true' if the camera is installed upside-down
             horizontalFlip: false // flips the image horizontally, should not need to be overridden
         },
-        language:'en'
+        language: 'es'
     }
 };
 
-// instantiate our TJBot!
+// Instanciamos al TJBot!
 var tj = new TJBot(hardware, tjConfig, credentials);
 
-tj.recognizeTextInPhoto('./resources/image.jpeg').then(function(objects){
-	console.log(JSON.stringify(objects, null, 2));
-	console.log(objects.images[0].text);
-});
+// Nos presentamos en la consola
+console.log("Me puedes pedir que me presente o que te diga un chiste");
+console.log("Intenta decir, \"" + tj.configuration.robot.name + ", por favor preséntate\" o \"¿" + tj.configuration.robot.name + ", Quien eres tu?\"");
+console.log("Tambien podrías decir, \"¡" + tj.configuration.robot.name + ", platícame un chiste!\"");
+
+function isEven(n){
+   return n % 2 == 0;
+}
+
+// Lee un texto desde la cámara
+function doRead(){
+	tj.read().then(function(texts){
+		console.log(JSON.stringify(texts));
+		tj.speak('Esto es lo que leí: '+texts.images[1].text);
+	});
+}
+
+// Twitea una foto con el ojo
+function doTwitImage(){
+	// Cargamos la bibliotecas necesarias
+	var postImage = require('post-image-to-twitter');
+	var Twit = require('twit');
+	// Leemos la configuración
+	var T = new Twit(config.twitterConfig);
+	
+	// Tomamos la foto, la leemos de archivo y la publicamos
+	var fs = require('fs');
+	tj.takePhoto().then(function(filePath){
+	    var buffer = fs.readFileSync(filePath);
+	    var postImageOpts = {
+	    		twit: T,
+	    		base64Image: buffer.toString('base64'),
+	    		altText: 'Esto es lo que véo',
+	    		caption: 'Vi esto y lo publiqué!'
+	    };
+	    postImage(postImageOpts, wrapUp);
+	    tj.speak('listo, he hecho una publicacion!');
+    });
+}
+
+function wrapUp(error, data) {
+  if (error) {
+    console.log(error, error.stack);
+
+    if (data) {
+      console.log('data:', data);
+    }
+  }
+}
+
+function discoParty() {
+  tj.play('./resources/club.wav');
+  for (i = 0; i < 10; i++) {
+    tj.wave();
+    setTimeout(function() {
+      var randIdx = Math.floor(Math.random() * tjColors.length);
+      var randColor = tjColors[randIdx];
+      tj.shine(randColor);
+    }, i * 250);
+  }
+}
+
+/*
+ * Escuchamos lo que dice el usuario y lo mandamos al servicio
+ * de Watson conversation
+ */
+function doListen(){
+	try{
+		tj.listen(function(msg) {
+			// Validamos si estan hablando con nosotros
+			if (msg.startsWith(tj.configuration.robot.name)) {
+				
+				// Eliminamos nuestro nombre del mensaje
+				var turn = msg.toLowerCase().replace(tj.configuration.robot.name.toLowerCase(), "");
+				
+				// Empujamos el mensaje a conversation
+				tj.converse(WORKSPACEID, turn, function(response) {
+					
+					// Manejamos la respuesta
+					if(response != null && response.description != null && response.description != ''){
+						if(response.description.startsWith('<read/>')){
+							doRead();
+						}else if(response.description.startsWith('<tweetView/>')){
+							doSee();
+						} else {
+							if(response.description.startsWith('<wave')){tj.wave();}
+							if(response.description.startsWith('<baila')){discoParty();}
+							if(response.description.startsWith('<armUp/>')){tj.raiseArm()};
+							if(response.description.startsWith('<armDown/>')){tj.lowerArm()};
+							tj.speak(response.description).then(function(){tj.shine('green');});
+						}
+					}
+				});
+			}
+		});
+	}catch(err){
+		doListen();
+	}
+}
+
+doListen();
