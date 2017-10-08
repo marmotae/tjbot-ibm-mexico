@@ -165,6 +165,10 @@ function discoParty() {
  * de Watson conversation
  */
 function doListen(){
+	if(tj._conversationContext[WORKSPACEID]==undefined){
+		tj._conversationContext[WORKSPACEID]={};
+	}
+	tj._conversationContext[WORKSPACEID].timezone="Mexico/General";
 	console.log(tj._conversationContext);
 	try{
 		tj.listen(function(msg) {
