@@ -43,7 +43,7 @@ var tjConfig = {
         language: 'es-ES'
     },
     log: {
-        level: 'info',
+        level: 'verbose',
     },
     see: {
         confidenceThreshold: {
