@@ -22,7 +22,7 @@ var TJBot = require('./lib/tjbot');
 
 //creamos una bitácora winston
 const winston = require('winston');
-winston.level = congig.loglevel;
+winston.level = config.loglevel;
 
 
 // obtain our credentials from config.js
