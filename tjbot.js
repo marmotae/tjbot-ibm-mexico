@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-// Cargamos la biblioteca de tjbot
-var TJBot = require('./lib/tjbot');
 // Cargamos la configuracion de credenciales
 var config = require('./config');
+
+//Cargamos la biblioteca de tjbot
+var TJBot = require('./lib/tjbot');
+
+//creamos una bitácora winston
+const winston = require('winston');
+winston.level = congig.loglevel;
 
 
 // obtain our credentials from config.js
@@ -43,7 +48,7 @@ var tjConfig = {
         language: 'es-ES'
     },
     log: {
-        level: 'verbose',
+        level: config.loglevel,
     },
     see: {
         confidenceThreshold: {
@@ -62,27 +67,31 @@ var tjConfig = {
 
 // Instanciamos al TJBot!
 var tj = new TJBot(hardware, tjConfig, credentials);
+winston.debug('TJ Bot Inicializado');
 
 
 // Nos presentamos en la consola
-console.log("Me puedes pedir que me presente o que te diga un chiste");
-console.log("Intenta decir, \"" + tj.configuration.robot.name + ", por favor preséntate\" o \"¿" + tj.configuration.robot.name + ", Quien eres tu?\"");
-console.log("Tambien podrías decir, \"¡" + tj.configuration.robot.name + ", platícame un chiste!\"");
+winston.info("Me puedes pedir que me presente o que te diga un chiste");
+winston.info("Intenta decir, \"" + tj.configuration.robot.name + ", por favor preséntate\" o \"¿" + tj.configuration.robot.name + ", Quien eres tu?\"");
+winston.info("Tambien podrías decir, \"¡" + tj.configuration.robot.name + ", platícame un chiste!\"");
 
-function isEven(n){
-   return n % 2 == 0;
-}
-
-// Lee un texto desde la cámara
+/*
+ * Funcion para leer texto mediante reconocimiento visual
+ */
 function doRead(){
+	winston.verbose('Preparando lectura');
 	tj.read().then(function(texts){
 		console.log(JSON.stringify(texts));
+		winston.info("Leí : "+texts.images[1].text);
 		tj.speak('Esto es lo que leí: '+texts.images[1].text);
 	});
 }
 
-// Twitea una foto con el ojo
+/*
+ * Función para twitear una imagen captada con el ojo del robot
+ */
 function doTwitImage(){
+	winston.verbose("Preparando para twitear imagen");
 	// Cargamos la bibliotecas necesarias
 	var postImage = require('post-image-to-twitter');
 	var Twit = require('twit');
@@ -90,6 +99,7 @@ function doTwitImage(){
 	var T = new Twit(config.twitterConfig);
 	
 	// Tomamos la foto, la leemos de archivo y la publicamos
+	winston.verbose("Capturando imagen");
 	var fs = require('fs');
 	tj.takePhoto().then(function(filePath){
 	    var buffer = fs.readFileSync(filePath);
@@ -100,6 +110,7 @@ function doTwitImage(){
 	    		caption: 'Vi esto y lo publiqué!'
 	    };
 	    postImage(postImageOpts, wrapUp);
+	    winston.debug("Imagen posteada");
 	    tj.speak('listo, he hecho una publicacion!');
     });
 }
@@ -114,6 +125,8 @@ function wrapUp(error, data) {
   }
 }
 
+
+// Reconocimiento Visual
 function doSee(){
 	var objeto=null;
 	var otro =null;
@@ -147,6 +160,7 @@ function doSee(){
 	});
 }
 
+// Baila
 function discoParty() {
 	var tjColors = tj.shineColors();
 	tj.play('./resources/club.wav');
@@ -161,15 +175,25 @@ function discoParty() {
 }
 
 /*
+ * Ajusta la variable de contexto para huso horario
+ * si no ajustamos el huso, por default trabaja en GMT
+ */
+function ajustaHuso() {
+	if(config.timezone != undefined && tj != undefined && tj._conversationContext != undefined){
+		if(tj._conversationContext[WORKSPACEID]==undefined){
+			tj._conversationContext[WORKSPACEID]={};
+		}
+		tj._conversationContext[WORKSPACEID].timezone=config.timezone;
+	}
+}
+
+
+/*
  * Escuchamos lo que dice el usuario y lo mandamos al servicio
  * de Watson conversation
  */
 function doListen(){
-	if(tj._conversationContext[WORKSPACEID]==undefined){
-		tj._conversationContext[WORKSPACEID]={};
-	}
-	tj._conversationContext[WORKSPACEID].timezone="Mexico/General";
-	console.log(tj._conversationContext);
+	ajustaHuso();
 	try{
 		tj.listen(function(msg) {
 			// Validamos si estan hablando con nosotros
