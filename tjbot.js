@@ -165,7 +165,7 @@ function discoParty() {
  * de Watson conversation
  */
 function doListen(){
-	console.log(tj.conversationContext);
+	console.log(tj._conversationContext);
 	try{
 		tj.listen(function(msg) {
 			// Validamos si estan hablando con nosotros
