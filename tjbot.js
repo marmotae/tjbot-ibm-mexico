@@ -111,7 +111,7 @@ function doTwitImage(){
 	    };
 	    postImage(postImageOpts, wrapUp);
 	    winston.debug("Imagen posteada");
-	    tj.speak('listo, he hecho una publicacion!');
+	    tj.speak('listo, he hecho una publicación!');
     });
 }
 
@@ -165,11 +165,6 @@ function discoParty() {
 	var tjColors = tj.shineColors();
 	tj.play('./resources/club.wav');
 	for (i = 0; i < 10; i++) {
-		setTimeout(function() {
-			var randIdx = Math.floor(Math.random() * tjColors.length);
-			var randColor = tjColors[randIdx];
-			tj.shine(randColor);
-		}, i * 250);
 		tj.wave();
 	}
 }
@@ -211,6 +206,14 @@ function doListen(){
 							if(response.description.startsWith('<baila/>')){discoParty();}
 							if(response.description.startsWith('<comparte/>')){doTwitImage()};
 							if(response.description.startsWith('<ve/>')){doSee()};
+							if(response.description.startsWith('<subeBrazo/>')){
+								tj.raiseArm();
+								tj.speak('brazo arriba!');
+							};
+							if(response.description.startsWith('<bajaBrazo/>')){
+								tj.lowerArm();
+								tj.speak('brazo abajo!');
+							};
 						} else {
 							tj.speak(response.description);
 						}
