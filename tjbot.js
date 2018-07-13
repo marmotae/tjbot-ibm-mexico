@@ -18,7 +18,7 @@
 var config = require('./config');
 
 //Cargamos la biblioteca de tjbot
-var TJBot = require('./lib/tjbot');
+var TJBot = require('tjbot');
 
 //creamos una bitácora winston
 const winston = require('winston');
@@ -174,11 +174,12 @@ function discoParty() {
  * si no ajustamos el huso, por default trabaja en GMT
  */
 function ajustaHuso() {
-	if(config.timezone != undefined && tj != undefined && tj._conversationContext != undefined){
-		if(tj._conversationContext[WORKSPACEID]==undefined){
-			tj._conversationContext[WORKSPACEID]={};
+	if(config.timezone != undefined && tj != undefined && tj._assistantContext != undefined){
+		if(tj._assistantContext[WORKSPACEID]==undefined){
+			tj._assistantContext[WORKSPACEID]={};
 		}
-		tj._conversationContext[WORKSPACEID].timezone=config.timezone;
+		winston.info("Ajustando zona a "+config.timezone);
+		tj._assistantContext[WORKSPACEID].timezone=config.timezone;
 	}
 }
 
