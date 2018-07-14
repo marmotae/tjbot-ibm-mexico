@@ -52,8 +52,38 @@ Esto nos mostrará una ventana de dialogo para elegir un archivo mismo que se en
 
 ![picture Importamos el workspace](resources/images/wa04_elige_archivo_importar_workspace.png)
 
- a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
+Al terminar de importar el workspace, se nos transfiere a la pantalla de edición, sin embargo ahora necesitamos regresa a la sección de `Workspaces`para obtener un dato. Por lo tanto en el menú del lado izquerdo seleccionamos el último boton
 
+![picture Regresamos a workspaces](resources/images/wa05_salir_a_paneles.png)
+
+Una vez que nos encontramos en la sección de `Workspaces`debemos tomar la tarjeta correspondiente al taller y dando click en el menú superior derecho, seleccionamos la opción `View details``
+
+![picture Seleccionamos los detalles](resources/images/wa06_propiedades_panel.png)
+
+La tarjeta girará mostrándonos los detalles. Aquí la parte importante es el `Worspace ID`que procedemos a copiar, dando click en el ícono mostrado a continuación
+
+![picture Seleccionamos los detalles](resources/images/wa07_copia_identificador.png)
+
+ Ahora debemos usar ese número en la sección correspondiente de nuestro archivo de configuración `config.js`. Abriendo ese archivo debemos encontrar la siguiente sección
+
+ ```
+ /**
+ * Creación de los elementos de conversación con el Watson Assistant
+ */
+
+// Primero creamos y configuramos el identificador de workspace a usar con Assistant
+exports.assistantWorkspaceId = ''; 
+
+ ```
+Pegaremos el valor de `WorkspaceId` entre las commilas que aparecen al lado de la frase assistantWorkspaceId.
+
+Ahora procederemos a copiar las credenciales. De regreso en nuestra sección de administración de servicio en __IBM Cloud__ podemos encontrar la sección de credenciales para nuestro servicio. Si esta sección aparece con una serie de `•••••••••••`esto quiere decir que los valores se encuentran ocultos por lo que presionaremos el boton `Show`que aparece en la parte superior derecha. 
+
+![picture Copiando username y password](resources/images/wa08_copia_credenciales.png)
+
+En el caso que aparece anteriormente, este servicio tiene cartas credenciales a manera de username/password. Dependiendo del servicio y de su fecha de creación inicial, es posible que encontremos un servicio en donde en lugar de esto se nos muestre una llave de API como en el caso siguiente
+
+![picture Copiando APIs](resources/images/wa09_copia_api.png)
 
 Ahora debemos crear un archivo de configuración. Se incluye un archivo de muestra que puede ser usado copiandolo del archivo de muestra al definitivo
 
