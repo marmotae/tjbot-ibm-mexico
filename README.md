@@ -12,7 +12,7 @@ git clone https://github.com/marmotae/tjbot-ibm-mexico.git
 Esto bajará los archivos de proyecto necesarios restando tan solo bajar las bibliotecas adicionales de las dependencias. Para hacer esto, usamos la herramienta __npm__ de la siguiente forma desde nuestra línea de comando del __TJBot__
 
 ```
-$ npm install 
+npm install 
 ```
 El proceso tomará unos minutos en lo que baja el código fuente necesario y lo compila
 
@@ -23,7 +23,7 @@ El proceso tomará unos minutos en lo que baja el código fuente necesario y lo 
 La configuración de los distintos servicios se hace mediante un archivo de configuración. Se ha integrado un archivo que puede ser usado como punto de partida. Para crearlo, copiemos el archivo muestra a el archivo definitivo de la siguiente forma:
 
 ```
-$ cp config.default.js config.js 
+cp config.default.js config.js 
 ```
 
 Existen tres servicios básicos a configurar :
@@ -44,7 +44,13 @@ Esto nos lleva a la página de bienvenida para el __Watson Assistant__, una vez 
 
 ![picture Seleccionamos la sección de workspaces](resources/images/wa02_administra_workspaces.png)
 
+Una vez que estamos dentro de la sección de `Workspaces`tenemos la opción de crear uno desde cero, sin embargo en nuestro caso, tenemos un archivo previamente creado que importaremos. Para esto debemos hacer click en el botón de importación de archivos
 
+![picture Seleccionamos importar un workspace](resources/images/wa03_elige_importar_workspace.png)
+
+Esto nos mostrará una ventana de dialogo para elegir un archivo mismo que se encuentra entre los archivos clonados de nuestro repositorio. Navegamos a la ruta `resources` y ahí seleccionamos el archivo normbrado `conversacion_taller_tjbot.json` para finalmente importarlo como se muestra a continuación:
+
+![picture Importamos el workspace](resources/images/wa04_elige_archivo_importar_workspace.png)
 
  a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
 
