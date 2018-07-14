@@ -3,45 +3,20 @@
 Este es un proyecto en Node.js para demostrar las funcionalidades básicas de TJBot que incluyen: ver, 
 escuchar, hablar, bailar, etc.
 
-El proyecto está configurado para hacer uso de la biblioteca [TJBotLib](http://github.com/ibmtjbot/tjbotlib).
-
-Para hacer uso del proyecto es necesario contar con una cuenta de [IBM Cloud](https://www.bluemix.net) y contar con servicios configurados de __IBM Watson__ tales como __Watson Asistant__, __Speech to Text__, __Text to Speech__ entre otros.
-
-Para hacer uso de dichos servicios, deberá especificar las credenciales apropiadas en el archivo de configuración, segón se describe mas adelante en este archivo.
-
-## Uso de la biblioteca tjbot ##
-
-Este desarrollo está configurado para hacer uso de la biblioteca __tjbot__ disponible [aquí](http://github.com/ibmtjbot/tjbotlib), sin embargo, es posible hacer uso de una versión modificada de la misma modificando la referencia a ella en el archivo __package.json__ substituyendo el valor de la versión de __tjbot__ por la ruta al directorio en donde se encuentra el código fuente de la biblioteca modificada. Por ejempo
+Para utilizar el presente proyecto en nuestro TJBot, debemos primero clonar este repositorio a nuestro __TJBot__ por lo tanto desde una ventana de terminal en nuestro robót, ejecutaremos la clonación de la siguiente manera:
 
 ```
-  "dependencies": {
-    "assert": "^1.4.1",
-    "asyncawait": "^1.0.6",
-    "color-model": "^0.2.2",
-    "colornames": "^1.1.1",
-    "fifo": "^2.3.0",
-    "mic": "^2.1.1",
-    "node-raspistill": "^0.0.11",
-    "object.pick": "^1.2.0",
-    "semaphore": "^1.0.5",
-    "sleep": "^5.0.0",
-    "sound-player": "^1.0.4",
-    "temp": "^0.8.3",
-    "tjbot": "../tjbotlib",
-    "watson-developer-cloud": "^2.11.1",
-    "winston": "^2.3.1",
-    "post-image-to-twitter":"1.0.0",
-    "twit":"2.2.9"
-  },
+git clone https://github.com/marmotae/tjbot-ibm-mexico.git
 
 ```
-
-Una vez modificado el archivo __package.json__ o bien si se decide proceder con la biblioteca estándar, realizamos la instalación de dependencias usando __npm__. 
+Esto bajará los archivos de proyecto necesarios restando tan solo bajar las bibliotecas adicionales de las dependencias. Para hacer esto, usamos la herramienta __npm__ de la siguiente forma desde nuestra línea de comando del __TJBot__
 
 ```
 $ npm install 
 ```
-Cabe mencionar que esta instalación tomará algunos minutos
+El proceso tomará unos minutos en lo que baja el código fuente necesario y lo compila
+
+> Nota: En ocasiones es necesario trabajar con versiones modificadas de las bibliotecas. Esto es una acción para usuarios mas avanzados. Si tienes esta necesidad, puedes ver como hacerlo [aquí](README_LOCAL_LIBRARY.md)
 
 ## Configuración de los servicios ##
 
@@ -64,6 +39,12 @@ El díalogo de nuestro __TJBot__ es controlado y orquestado por el servicio __Wa
 Una vez creado el servicio de __Watson Assistant__, debemos entrar a su panel de administración y en la sección __Manage__ damos click sobre el botón para invocar la herramienta de gestión del __Watson Assistant__
 
 ![picture Invocando el Administrador del Assistant](resources/images/wa01_administra_assistant.png)
+
+Esto nos lleva a la página de bienvenida para el __Watson Assistant__, una vez ahí debemos seleccionar en el menú superior izquierdo la opción marcada como `Workspaces`para poder crear nuestro espacio de trabajo del díalogo
+
+![picture Seleccionamos la sección de workspaces](resources/images/wa02_administra_workspaces.png)
+
+
 
  a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
 
