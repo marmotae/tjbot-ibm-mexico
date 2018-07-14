@@ -134,7 +134,62 @@ exports.credentials.text_to_speech = {
 };
 ```
 
-# Wave
+### Configuración de otros sevicios ###
+Los demás servicios no son esenciales para la ejecución del taller, sin embargo el archivo muestra de configuración incluye secciones para los demás servicios. La configuración es similar a la ejecutada para los servicios de  `Speech to Text` y `Text to Speech`. La descripción detallada de como usarlos se encuentra fuera del alcance del taller pero a manera de asistencia, se incorpora la siguiente tabla que muestra el servicio, la variable usada para las credenciales y una breve descripción del servicio:
+
+Servicio            | Variable                               | Descripción
+--------------------|----------------------------------------|---------------------------------------
+Language Translator | exports.credentials.language_translator| Servicio de traducción entre idiomas
+Visual Recognition  | exports.credentials.visual_recognition | Servicio de reconocimiento de imágenes
+Tone Analizer       | exports.credentials.tone_analyzer      | Servicio de análisis de tono emocional
+
+## Otras Configuraciones Posibles ##
+
+### Configuración del Huso Horario ###
+Algunas operaciones de conversación del asistant pueden hacer supuestos sobre la hora, sin embargo en caso de no ser especificada, __TJBot__ tomará como la hora local aquella de el Meridiano de Greenwich. Para poder ajustar la hora local, debemos especificar el Huso Horario en donde nos encontramos. Esto lo podemos especificar en el archivo `config.js` dentro de la siguiente sección
+
+```
+/**
+ * Configuración del huso horario:
+ * Se necesita configurar un huso horario pues en su defecto los servicios invocados desde
+ * el IBM cloud ejecutarán considerando por omisión GMT.
+ * 
+ * Para consultar una lista completa de los husos revisar en la siguente liga
+ * 
+ * https://console.bluemix.net/docs/services/conversation/supported-timezones.html#time-zones-supported-by-system-entities
+ * 
+ */
+exports.timezone = 'America/Mexico_City';
+
+```
+> Nota: En el ejemplo, hemos configurado a __TJBot__ para operar en el Huso Horario de la Ciudad de México, para consultar una lista completa de los distintos husos horarios y sus configuraciones, lo puedes hacer [aquí](https://console.bluemix.net/docs/services/conversation/supported-timezones.html#time-zones-supported-by-system-entities)
+
+### Configuración del Nombre del Robot, la Voz, el Género y el Idioma ###
+El __TJBot__ está configurado por omisión para responder al nombre de __Mago__. a hablar con una voz masculina y para entender Español. Sin embargo estos elementos pueden ser cambiados. Para cambiarlo, cualquiera de estos comportamientos, deberá editar el archivo principal de programa `tjbot.js` buscando la siguiente sección:
+
+```
+// set up TJBot's configuration
+var tjConfig = {
+    robot: {
+    		name: 'mago',
+    		gender: 'male',
+    },
+    listen: {
+        language: 'es-ES',
+        inactivity_timeout: -1
+    },
+    speak: {
+        language: 'es-ES'
+    },
+```
+Para modificar esta sección podemos considerar lo siguiete:
+
+* Para cambiar el nombre del robót, debemos modificar el valor asignado a la variable `name` cambiandola de __mago__ al valor que prefiera
+* Para cambiar el genero del robót, debemos modificar el valor asignado a la variable `gender` cambiandolo por ejemplo de su valor actual __male__ a __female__ por ejemplo
+* Para cambiar el idioma en que por omisión escuchará el robot, debemos cambiar el valor asignado a la variable `language` dentro de la sección `listen` de __es-ES__ (Español) a otro, por ejemplo __en-US__. Para consultar una lista de los idiomas soportados, ver [aquí](https://console.bluemix.net/docs/services/speech-to-text/input.html#models)
+* Para cambiar el idioma en que por omisión hablará el robot, debemos cambiar el valor asignado a la variable `language` dentro de la sección `speak` de __es-ES__ (Español) a otro, por ejemplo __en-US__. Para consultar una lista de los idiomas soportados, ver [aquí](https://console.bluemix.net/docs/services/speech-to-text/input.html#models)
+
+> Nota: Debemos considerar que el diálogo incluido con el taller está en Español por lo que para cambiar los idomas, deberemos desarrollar un díalogo en aquel idioma selecciónado. Por otra parte, es factible que no existan ambos géneros en el idioma elegido. Por ejemplo si eligieramos bajo `speak` el idioma __es-LA__ (Español Latinoamericado) en lugar de __es-ES__ (Español de España) veríamos que la voz es forzosamente femenina ya que aún no se ha desarrollado una voz masculina para ese idioma.
 
 ## tj.armBack()
 
