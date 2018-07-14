@@ -29,7 +29,7 @@ winston.level = config.loglevel;
 var credentials = config.credentials;
 
 // obtain user-specific config
-var WORKSPACEID = config.conversationWorkspaceId;
+var WORKSPACEID = config.assistantWorkspaceId;
 
 // these are the hardware capabilities that TJ needs for this recipe
 var hardware = ['led','servo','microphone', 'speaker','camera'];
@@ -186,7 +186,7 @@ function ajustaHuso() {
 
 /*
  * Escuchamos lo que dice el usuario y lo mandamos al servicio
- * de Watson conversation
+ * de Watson Assistant
  */
 function doListen(){
 	ajustaHuso();
@@ -198,7 +198,7 @@ function doListen(){
 				// Eliminamos nuestro nombre del mensaje
 				var turn = msg.toLowerCase().replace(tj.configuration.robot.name.toLowerCase(), "");
 				
-				// Empujamos el mensaje a conversation
+				// Empujamos el mensaje a Assistant
 				tj.converse(WORKSPACEID, turn, function(response) {
 					
 					// Manejamos la respuesta
