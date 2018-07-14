@@ -1,6 +1,6 @@
 # Receta de proyecto TJBot ajustado para México #
 
-> Este es un proyecto en Node.js para demostrar las funcionalidades básicas de TJBot que incluyen: ver, 
+Este es un proyecto en Node.js para demostrar las funcionalidades básicas de TJBot que incluyen: ver, 
 escuchar, hablar, bailar, etc.
 
 El proyecto está configurado para hacer uso de la biblioteca [TJBotLib](http://github.com/ibmtjbot/tjbotlib).
@@ -11,7 +11,7 @@ Para hacer uso de dichos servicios, deberá especificar las credenciales apropia
 
 ## Uso de la biblioteca tjbot ##
 
-> Este desarrollo está configurado para hacer uso de la biblioteca __tjbot__ disponible [aquí](http://github.com/ibmtjbot/tjbotlib), sin embargo, es posible hacer uso de una versión modificada de la misma modificando la referencia a ella en el archivo __package.json__ substituyendo el valor de la versión de __tjbot__ por la ruta al directorio en donde se encuentra el código fuente de la biblioteca modificada. Por ejempo
+Este desarrollo está configurado para hacer uso de la biblioteca __tjbot__ disponible [aquí](http://github.com/ibmtjbot/tjbotlib), sin embargo, es posible hacer uso de una versión modificada de la misma modificando la referencia a ella en el archivo __package.json__ substituyendo el valor de la versión de __tjbot__ por la ruta al directorio en donde se encuentra el código fuente de la biblioteca modificada. Por ejempo
 
 ```
   "dependencies": {
@@ -58,7 +58,14 @@ Existen tres servicios básicos a configurar :
 
 Por lo tanto, antes de continuar debemos ir a [IBM Cloud](http://www.bluemix.net) a crear una cuenta y generar los tres servicios.
 
-Para conectar con el díalog a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
+### Configuración del Watson Assistant ###
+El díalogo de nuestro __TJBot__ es controlado y orquestado por el servicio __Watson Assistant__ por lo tanto debemos de configurar el servicio. El primer paso consiste en crear un díalogo, tambien conocido como un __workspace__
+
+Una vez creado el servicio de __Watson Assistant__, debemos entrar a su panel de administración y en la sección __Manage__ damos click sobre el botón para invocar la herramienta de gestión del __Watson Assistant__
+
+[picture](resources/images/wa01_administra_assistant.png)
+
+ a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
 
 
 Ahora debemos crear un archivo de configuración. Se incluye un archivo de muestra que puede ser usado copiandolo del archivo de muestra al definitivo
