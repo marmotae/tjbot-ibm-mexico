@@ -63,7 +63,7 @@ El díalogo de nuestro __TJBot__ es controlado y orquestado por el servicio __Wa
 
 Una vez creado el servicio de __Watson Assistant__, debemos entrar a su panel de administración y en la sección __Manage__ damos click sobre el botón para invocar la herramienta de gestión del __Watson Assistant__
 
-[picture](resources/images/wa01_administra_assistant.png)
+![picture Invocando el Administrador del Assistant](resources/images/wa01_administra_assistant.png)
 
  a usar debemos encontrar la variable conversationWorkspaceId y colocar el identificador único del diálogo
 
