@@ -191,30 +191,30 @@ Para modificar esta sección podemos considerar lo siguiete:
 
 > Nota: Debemos considerar que el diálogo incluido con el taller está en Español por lo que para cambiar los idomas, deberemos desarrollar un díalogo en aquel idioma selecciónado. Por otra parte, es factible que no existan ambos géneros en el idioma elegido. Por ejemplo si eligieramos bajo `speak` el idioma __es-LA__ (Español Latinoamericado) en lugar de __es-ES__ (Español de España) veríamos que la voz es forzosamente femenina ya que aún no se ha desarrollado una voz masculina para ese idioma.
 
-## tj.armBack()
+### Ajustando el Hardware Usado ###
+El __TJBot__ original considera además de la tarjeta madre lo siguiente:
+* Un micrófono
+* Una bocina
+* Un diodo LED
+* Un servo motor
+* Una cámara
 
-Causes TJBot to move its arm backward (like a wind-up for a pitch).
+Sin embargo no todo el equipamiento es obligatorio y se puede trabajar con un __TJBot__ con menos equipamiento aunque con menos funciones. Si nuestro __TJBot__ tiene equipo de menos, debemos configurarlo correctamente. Para esto debemos modificar la siguiente sección dentro del archivo principal `tjbot.js`:
 
-> Note: if this method doesn't produce the expected result, the servo motor stop points may need to be overridden. Override the value of `TJBot.prototype._SERVO_ARM_BACK` to find a stop point that satisfies the "back" position. Note that valid servo values are in the range [500, 2300].
+```
+// these are the hardware capabilities that TJ needs for this recipe
+var hardware = ['led','servo','microphone', 'speaker','camera'];
+```
 
-## tj.raiseArm()
+En el ejemplo aquí mostrado, tenemos una configuración completa del __TJBot__, si el nuestro no tiene un elemento en particular, debemos eliminarlo de la lista que aparece dentro del valor de `hardware`. Por ejemplo, si nuestro __TJBot__ no cuenta con la cámara, la configuración quedaría de la siguiente manera:
 
-Causes TJBot to raise its arm to the upward position.
+```
+// these are the hardware capabilities that TJ needs for this recipe
+var hardware = ['led','servo','microphone', 'speaker'];
+```
 
-> Note: if this method doesn't produce the expected result, the servo motor stop points may need to be overridden. Override the value of `TJBot.prototype._SERVO_ARM_UP` to find a stop point that satisfies the "back" position. Note that valid servo values are in the range [500, 2300].
+# Contribuciones al proyecto
+Le invitamos a hacer modificaciones y mejoras a este proyecto haciendo uso de este repositorio. Haga un `pull request` para solicitar la inclusión de sus mejoras. O bien si no es desarrollador, sugiera en la página de este repositorio mejoras que le gustaría que incluyeramos.
 
-## tj.lowerArm()
-
-Causes TJBot to lower its arm to the downward position.
-
-> Note: if this method doesn't produce the expected result, the servo motor stop points may need to be overridden. Override the value of `TJBot.prototype._SERVO_ARM_DOWN` to find a stop point that satisfies the "back" position. Note that valid servo values are in the range [500, 2300].
-
-## tj.wave()
-
-Causes TJBot to wave the arm once (up-down-up).
-
-# Contributing
-We encourage you to make enhancements to this library and contribute them back to us via a pull request.
-
-# License
-This project uses the [Apache License Version 2.0](LICENSE) software license.
+# Licencia
+Este proyecto se ha liberado bajo la licencia [Apache License Version 2.0](LICENSE) .
