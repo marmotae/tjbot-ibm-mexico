@@ -120,3 +120,14 @@ exports.credentials.visual_recognition = {
 	api_key: ""
 };
  */
+
+/**
+ * Servicio de análisis de tono
+ */
+
+/**
+exports.credentials.tone_analyzer = {
+	password: '',
+	username: ''
+};
+ */
