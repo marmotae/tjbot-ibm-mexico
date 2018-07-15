@@ -165,14 +165,14 @@ exports.timezone = 'America/Mexico_City';
 > Nota: En el ejemplo, hemos configurado a __TJBot__ para operar en el Huso Horario de la Ciudad de México, para consultar una lista completa de los distintos husos horarios y sus configuraciones, lo puedes hacer [aquí](https://console.bluemix.net/docs/services/conversation/supported-timezones.html#time-zones-supported-by-system-entities)
 
 ### Configuración del Nombre del Robot, la Voz, el Género y el Idioma ###
-El __TJBot__ está configurado por omisión para responder al nombre de __Mago__. a hablar con una voz masculina y para entender Español. Sin embargo estos elementos pueden ser cambiados. Para cambiarlo, cualquiera de estos comportamientos, deberá editar el archivo principal de programa `tjbot.js` buscando la siguiente sección:
+El __TJBot__ está configurado por omisión para responder al nombre de __Mago__. a hablar con una voz femenina y para entender Español. Sin embargo estos elementos pueden ser cambiados. Para cambiarlo, cualquiera de estos comportamientos, deberá editar el archivo principal de programa `tjbot.js` buscando la siguiente sección:
 
 ```
 // set up TJBot's configuration
 var tjConfig = {
     robot: {
     		name: 'mago',
-    		gender: 'male',
+    		gender: 'female',
     },
     listen: {
         language: 'es-ES',
@@ -185,7 +185,7 @@ var tjConfig = {
 Para modificar esta sección podemos considerar lo siguiete:
 
 * Para cambiar el nombre del robót, debemos modificar el valor asignado a la variable `name` cambiandola de __mago__ al valor que prefiera
-* Para cambiar el genero del robót, debemos modificar el valor asignado a la variable `gender` cambiandolo por ejemplo de su valor actual __male__ a __female__ por ejemplo
+* Para cambiar el genero del robót, debemos modificar el valor asignado a la variable `gender` cambiandolo por ejemplo de su valor actual __female__ a __male__ por ejemplo
 * Para cambiar el idioma en que por omisión escuchará el robot, debemos cambiar el valor asignado a la variable `language` dentro de la sección `listen` de __es-ES__ (Español) a otro, por ejemplo __en-US__. Para consultar una lista de los idiomas soportados, ver [aquí](https://console.bluemix.net/docs/services/speech-to-text/input.html#models)
 * Para cambiar el idioma en que por omisión hablará el robot, debemos cambiar el valor asignado a la variable `language` dentro de la sección `speak` de __es-ES__ (Español) a otro, por ejemplo __en-US__. Para consultar una lista de los idiomas soportados, ver [aquí](https://console.bluemix.net/docs/services/speech-to-text/input.html#models)
 
